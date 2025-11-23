@@ -333,17 +333,23 @@
         .week-number {
             position: absolute;
             top: 20px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--primary);
+            width: 80px;
+            text-align: center;
+            line-height: 1.1;
+            padding: 6px 8px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 6px;
         }
         
         .timeline-item:nth-child(odd) .week-number {
-            right: -70px;
+            right: -100px;
         }
-        
+
         .timeline-item:nth-child(even) .week-number {
-            left: -70px;
+            left: -100px;
         }
         
         .timeline-content h3 {
@@ -362,11 +368,65 @@
             background-color: rgba(108, 99, 255, 0.1);
             border-radius: 8px;
             margin-top: 15px;
+            display: block;
+            overflow: hidden;
+        }
+
+        /* Carousel for timeline images (keeps all images same size and adds dots when multiple) */
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .timeline-image.carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-weight: 600;
+            transition: transform 0.35s ease;
+            will-change: transform;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            left: 50%;
+            bottom: 8px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.15s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        /* Image captions under timeline images */
+        .img-caption {
+            text-align: center;
+            margin-top: 8px;
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 500;
         }
         
         /* Gallery Section */
@@ -715,6 +775,72 @@
         .delay-3 {
             animation-delay: 0.6s;
         }
+
+        /* Modal styles for Details popup */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: #0f0f1a;
+            color: var(--light);
+            width: 100%;
+            max-width: 720px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            padding: 22px;
+            position: relative;
+            border: 1px solid rgba(108,99,255,0.12);
+        }
+
+        .modal h3 {
+            margin-bottom: 8px;
+        }
+
+        .modal .modal-body {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        .modal .modal-body h4 {
+            margin: 10px 0 6px;
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .modal .modal-body ul {
+            margin: 6px 0 12px 18px;
+            color: var(--gray);
+        }
+
+        .modal .modal-body li {
+            margin-bottom: 6px;
+        }
+
+        .modal .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -788,92 +914,142 @@
             <h2 class="section-title">Professional Skills Journey</h2>
             <div class="timeline">
                 <div class="timeline-item fade-in">
-                    <div class="week-number"> Week 1</div>
+                    <div class="week-number">Week 1</div>
                     <div class="timeline-content">
                         <h3>Introduction to Professional Skills</h3>
                         <p>Foundational understanding of professional development and essential workplace skills.</p>
-                        <div class="timeline-image"><img src="Week1.png" style="width:100%; height:100%;">
-                        </div>
+                                <div class="timeline-image">
+                                    <img src="./timelinephoto/Week1.jpg" alt="Introduction to Professional Skills" style="width:100%; height:100%; object-fit: cover;">
+                                </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="1">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in delay-1">
-                    <div class="week-number"> Week 2</div>
+                    <div class="week-number">Week 2</div>
                     <div class="timeline-content">
-                        <h3>CV Writing</h3>
+                        <h3>Creating a Great CV</h3>
                         <p>Mastering the art of crafting compelling and professional resumes that stand out to employers.</p>
                         <div class="timeline-image">
-                            <img src="week2.jpeg" style="width:100%; height:100%; object-fit: cover;">
+                            <img src="./timelinephoto/week2.jpg" alt="Creating a Great CV" style="width:100%; height:100%; object-fit: cover;">
                         </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="2">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in delay-2">
-                    <div class="week-number"> Week 3</div>
+                    <div class="week-number">Week 3</div>
                     <div class="timeline-content">
-                        <h3>Interview Manner</h3>
+                        <h3>Mock Interview</h3>
                         <p>Developing confidence and professionalism in interview settings, including body language and communication.</p>
-                        <div class="timeline-image"><img src="interview.jpg" style="width:100%; height:100%; object-fit: cover;"></div>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/week3.jpg" alt="Mock Interview" style="width:100%; height:100%; object-fit: cover;">
+                            <img src="./timelinephoto/week3a.jpg" alt="Mock Interview - group" style="width:100%; height:100%; object-fit: contain; object-position: center;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="3">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in delay-3">
-                    <div class="week-number"> Week 4</div>
+                    <div class="week-number">Week 4</div>
                     <div class="timeline-content">
-                        <h3>Portfolio</h3>
-                        <p>Creating and showcasing a professional portfolio that effectively demonstrates skills and accomplishments.</p>
-                        <div class="timeline-image"><img src="cv.png" style="width:100%; height:100%; object-fit: cover;"></div>
+                        <h3>Interview Skills</h3>
+                        <p>Demonstrating effective interview skills to confidently communicate strengths and experience.</p>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/week4.jpg" alt="Interview Skills" style="width:100%; height:100%; object-fit: cover;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="4">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in">
-                    <div class="week-number"> Week 5</div>
+                    <div class="week-number">Week 5</div>
                     <div class="timeline-content">
-                        <h3>Meeting and Speaking Skills</h3>
-                        <p>Enhancing communication abilities for professional meetings, presentations, and public speaking.</p>
-                        <div class="timeline-image"><img src="week5.jpg" style="width:100%; height:100%; object-fit: cover;"></div>
+                        <h3>Email Writing Skills</h3>
+                        <p>Writing professional emails and understanding workplace ethics and professional conduct.</p>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/week5.jpg" alt="Email Writing Skills" style="width:100%; height:100%; object-fit: cover;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="5">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in delay-1">
-                    <div class="week-number"> Week 6</div>
+                    <div class="week-number">Week 6</div>
                     <div class="timeline-content">
-                        <h3>Email Writing and Ethical Skills</h3>
-                        <p>Writing professional emails and understanding workplace ethics and professional conduct.</p>
-                        <div class="timeline-image"><img src="week6.jpeg" style="width:100%; height:100%; object-fit: cover;"></div>
+                        <h3>Professional Phone Call Etiquette</h3>
+                        <p>Maintaining professional phone call etiquette to communicate clearly, respectfully, and confidently.</p>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/week6.jpg" alt="Professional Phone Call Etiquette" style="width:100%; height:100%; object-fit: cover;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="6">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in delay-2">
-                    <div class="week-number"> Week 7</div>
+                    <div class="week-number">Week 7</div>
                     <div class="timeline-content">
-                        <h3>Proposal Writing</h3>
-                        <p>Learning to write effective business and project proposals that communicate ideas clearly.</p>
-                        <div class="timeline-image"><img src="Week7.png" style="width:100%; height:100%; object-fit: cover;"></div>
+                        <h3>Dining Etiquette & Table Manners  </h3>
+                        <p>Practicing proper dining etiquette and table manners in professional settings.</p>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/Week7.jpg" alt="Dining Etiquette & Table Manners" style="width:100%; height:100%; object-fit: cover;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="7">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in delay-3">
-                    <div class="week-number"> Week 8</div>
+                    <div class="week-number">Week 8</div>
                     <div class="timeline-content">
-                        <h3>Team and Leadership</h3>
-                        <p>Developing leadership qualities and understanding effective team collaboration dynamics.</p>
-                        <div class="timeline-image"><img src="week8.jpg" style="width:100%; height:100%; object-fit: cover;"></div>
+                        <h3>Emotional Intelligence</h3>
+                        <p>Developing emotional intelligence to understand, manage, and respond to emotions effectively.</p>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/week8.jpg" alt="Emotional Intelligence" style="width:100%; height:100%; object-fit: cover;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="8">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in">
-                    <div class="week-number"> Week 9</div>
+                    <div class="week-number">Week 9</div>
                     <div class="timeline-content">
-                        <h3>Emotional Intelligence</h3>
-                        <p>Understanding and managing emotions, both personal and in professional relationships.</p>
+                        <h3>Portfolio Management</h3>
+                        <p>Managing portfolios to strategically allocate resources and achieve desired goals.</p>
                         <div class="timeline-image">
-                            <img src="week12.jpg" style="width:100%; height:100%; object-fit: cover;">
+                            <img src="./timelinephoto/week9.jpg" alt="Portfolio Management" style="width:100%; height:100%; object-fit: cover;">
                         </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="9">Details</button></div>
                     </div>
                 </div>
                 <div class="timeline-item fade-in delay-1">
                     <div class="week-number">Week 10</div>
                     <div class="timeline-content">
-                        <h3>Food Festival</h3>
-                        <p>Applied learned professional and interpersonal skills through hands-on participation in organizing a university food festival.</p>
+                        <h3>Writing & Identifying Abstracts</h3>
+                        <p>Writing and identifying concise, accurate abstracts for research and reports.</p>
                         <div class="timeline-image">
-                            <img src="report2.jpg" style="width:100%; height:100%; object-fit: cover;">
+                            <img src="./timelinephoto/week10.jpg" alt="Writing & Identifying Abstracts" style="width:100%; height:100%; object-fit: cover;">
                         </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="10">Details</button></div>
                     </div>
                 </div>
+                <!-- Week 11 -->
+                <div class="timeline-item fade-in">
+                    <div class="week-number">Week 11</div>
+                    <div class="timeline-content">
+                        <h3>Meeting Terminology & Conduct</h3>
+                        <p>Understanding meeting terminology and conducting meetings effectively and professionally.</p>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/week11.jpg" alt="Meeting Terminology & Conduct" style="width:100%; height:100%; object-fit: cover;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="11">Details</button></div>
+                    </div>
+                </div>
+                <!-- Week 12 -->
+                <div class="timeline-item fade-in delay-1">
+                    <div class="week-number">Week 12</div>
+                    <div class="timeline-content">
+                        <h3>Food Festival (Final)</h3>
+                        <p>Applied learned professional and interpersonal skills through hands-on participation in organizing a university food festival.</p>
+                        <div class="timeline-image">
+                            <img src="./timelinephoto/week12.jpg" alt="Food Festival (Final)" style="width:100%; height:100%; object-fit: cover;">
+                            <img src="./timelinephoto/week12a.jpg" alt="Food Festival - team" style="width:100%; height:100%; object-fit: contain; object-position: center;">
+                        </div>
+                        <div style="margin-top:12px;"><button class="btn details-btn" data-week="12">Details</button></div>
+                    </div>
+                </div>
+                <!-- Week 13 removed -->
             </div>
         </div>
     </section>
@@ -1093,6 +1269,406 @@
         window.addEventListener('scroll', fadeInOnScroll);
         // Trigger once on load
         window.addEventListener('load', fadeInOnScroll);
+
+        // Details modal data and handlers
+        const weekDetails = {
+            "1": {
+                title: 'Introduction to Professional Skills',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>The session revealed the skills that are regarded as the most important to succeed in the IT industry and those that are at the same time less visible and not so recognized like personal skills, values, beliefs, attitudes, and character, and their development.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Professional and Job Skills - An overview of the soft and technical skills that go with one's technical expertise.</li>
+                        <li>Workplace Skills Groups - Understanding technical, soft, and transferable skills.</li>
+                        <li>Values, Beliefs, Attitudes, and Character - The importance of personal values, beliefs, and attitudes in career growth.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Keep Learning - Always look for chances to learn through courses, workshops, or online resources.</li>
+                        <li>Ask for Feedback - The value of asking for feedback to improve and grow in your job.</li>
+                        <li>Take on Challenges - Take on new challenges to go beyond your comfort zone and improve your skills.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>The session showed the importance of matching one's personal values and technical skills with what an organization needs, which plays a big role in job fit and career growth. We also did a task to identify Technical Skills, Soft Skills, and Transferable Skills.</p>
+                `
+            },
+            "2": {
+                title: 'Week 2 — Creating a Great CV',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>This session was all about crafting a perfect CV, which elements to put in and which to leave out so as to not spoil your chances with the employer.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Important Parts of a CV - Things that should be included for making a strong first impression.</li>
+                        <li>Common CV Mistakes - Mistakes to avoid when writing a CV.</li>
+                        <li>Formatting Your CV - Tips for organizing your CV to make it neat and easy to read.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Clear and Brief - Your CV should be easy to read and focused on main talents and experience.</li>
+                        <li>Display Crucial Skills - Highlight skills and experiences most relevant to the role.</li>
+                        <li>Steer Clear of General Slip-Ups - Exclude unrelated personal details and avoid long paragraphs.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>The session revealed how crucial a CV is to target, what to include and what to avoid; we reviewed strong CV examples for inspiration.</p>
+                `
+            },
+            "3": {
+                title: 'Week 3 — Mock Interview',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>This session provided a mock interview experience to help students present themselves, answer questions, and demonstrate technical and soft skills in a real interview setting.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Interview Techniques - Answering common interview questions confidently.</li>
+                        <li>Showing Soft Skills - Demonstrating communication, problem-solving, and teamwork.</li>
+                        <li>Body Language - Importance of posture, eye contact, and nonverbal cues.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Preparation is Key - Research the company and practise responses.</li>
+                        <li>Practice Makes Perfect - Mock interviews reduce anxiety.</li>
+                        <li>Self-Reflection - Learn from feedback to improve.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>Improved understanding of interview preparation, communication skills, and how to make a positive impression on employers.</p>
+                `
+            },
+            "4": {
+                title: 'Week 4 — Interview Skills',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>The session covered the interview process from preparation through dressing, body language, and making a strong first impression.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Interview Preparation - Mental and practical readiness.</li>
+                        <li>Dressing Styles - Appropriate attire for interview situations.</li>
+                        <li>Body Language - Posture, gestures, and facial expressions.</li>
+                        <li>Interview Basics - Punctuality, attitude, and essentials.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Preparation is Important - Being ready gives an edge.</li>
+                        <li>First Impressions Matter - Dress and nonverbal cues matter.</li>
+                        <li>Confidence and Calmness - Body language reduces nervousness.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>The session highlighted the need to prepare and present oneself professionally to make a positive impression.</p>
+                `
+            },
+            "5": {
+                title: 'Week 5 — Email Writing Skills',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>This session focused on composing professional emails: types, structure, and important parts to include for clear communication.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Structure of Professional Emails - Proper formatting and organization.</li>
+                        <li>Email Etiquette - Polite, clear, respectful communication practices.</li>
+                        <li>Email Purpose - Requests, thank-yous, follow-ups and their structure.</li>
+                        <li>Clarity and Tone - Adjusting tone to the recipient.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Clear Structure is Key - Makes emails easy to read.</li>
+                        <li>Polite and Professional Tone - Maintain formality.</li>
+                        <li>Be Clear and Short - Avoid unnecessary details.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>The session clarified email etiquette and how to structure professional messages clearly and respectfully.</p>
+                `
+            },
+            "6": {
+                title: 'Week 6 — Professional Phone Call Etiquette',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>This session covered making professional phone calls: tone, structure, common mistakes, and response strategies.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Structure of Professional Phone Calls - Introduce yourself, state purpose, close politely.</li>
+                        <li>Phone Etiquette - Polite and clear communication over the phone.</li>
+                        <li>Response Strategies - Language appropriate for different call types.</li>
+                        <li>Common Mistakes to Avoid - Speaking too fast, being overly casual, or unclear.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Clear Communication - Articulate main points.</li>
+                        <li>Politeness is Important - Maintain a professional tone.</li>
+                        <li>Prepare in Advance - Outline main points before the call.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>Learned how to handle professional phone calls with proper tone, structure, and preparedness.</p>
+                `
+            },
+            "7": {
+                title: 'Week 7 — Dining Etiquette & Table Manners',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>The session highlighted professional dining etiquette, table settings, cultural differences, and proper behaviour at formal meals.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Dining Etiquette Basics - Use of utensils and table settings.</li>
+                        <li>Table Manners - Eating, talking, and making the right impression.</li>
+                        <li>Cross-Cultural Dining Practices - Understanding cultural differences.</li>
+                        <li>Common Mistakes to Avoid - Speaking with a full mouth, incorrect utensil use, etc.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Polite Conversation - Keep topics neutral and inclusive.</li>
+                        <li>Mind Your Body Language - Sit upright and avoid phone use.</li>
+                        <li>Follow the Host’s Lead - Take cues from the host.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>The session emphasized conversation, body language, and etiquette that influence impressions during business meals.</p>
+                `
+            },
+            "8": {
+                title: 'Week 8 — Emotional Intelligence',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>The session focused on emotional intelligence: how emotions influence behaviour, detecting emotional signals, and managing reactions.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Understanding Emotions – Identifying feelings in ourselves and others.</li>
+                        <li>Reacting to Situations – Role plays showing how emotions drive actions.</li>
+                        <li>Emotional Awareness – Recognising expression and communication of feelings.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Self-Awareness – Be conscious of your feelings and their effects.</li>
+                        <li>Empathy – Understand others' feelings and respond appropriately.</li>
+                        <li>Emotional Control – Use techniques to prevent emotions from disrupting professionalism.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>The session showed the importance of empathy, self-control, and awareness in both personal and professional interactions.</p>
+                `
+            },
+            "9": {
+                title: 'Week 9 — Portfolio Management',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>This session covered creation, organization, and presentation of professional portfolios to showcase achievements and skills.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Introduction to Portfolios – Types and purposes.</li>
+                        <li>Design Principles – Layout, structure, presentation.</li>
+                        <li>Putting Work in Order – Choosing quality pieces.</li>
+                        <li>Professional Presentation – Visual coherence and polish.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Smart Selection – Choose work aligned with goals.</li>
+                        <li>Visual Consistency – Maintain a polished look.</li>
+                        <li>Reflective Insight – Explain reasoning and learning for each piece.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>Learned to design and present an organized, professional portfolio that highlights quality work and learning.</p>
+                `
+            },
+            "10": {
+                title: 'Week 10 — Writing & Identifying Abstracts',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>This session focused on abstracts: their purpose in research articles and how to write concise, informative summaries.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Abstract Structure – Background, objectives, methods, results, conclusions.</li>
+                        <li>Writing Techniques – Concise, clear, informative abstracts.</li>
+                        <li>Identifying Key Elements – Extracting essential facts from articles.</li>
+                        <li>Abstract Types – Descriptive vs informative abstracts.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Short and Clear – Keep abstracts within recommended length.</li>
+                        <li>Clarity – Use simple language and avoid jargon.</li>
+                        <li>Completeness – Include all crucial research information.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>Practised dissecting articles and writing concise abstracts; learned the role of keywords for retrieval.</p>
+                `
+            },
+            "11": {
+                title: 'Week 11 — Meeting Terminology & Conduct',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>This session covered meeting vocabulary, running effective meetings, and confident participation with a practical Vetrak Club activity.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Meeting Words – Agenda, minutes, action items, quorum, consensus.</li>
+                        <li>Running Good Meetings – Organizing and directing productive meetings.</li>
+                        <li>Confident Participation – Techniques to speak up and contribute.</li>
+                        <li>Meeting Practice – Role-play: "Vetrak Club New Member Selection."</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Understanding the Terminology – Know common meeting terms.</li>
+                        <li>Effective Communication – Use concise, formal language.</li>
+                        <li>Building Confidence – Techniques to overcome shyness and contribute.</li>
+                        <li>Meeting Rules – Know how to join, participate, and close meetings properly.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>Applied meeting vocabulary and learned to lead/participate in meetings; role-play gave practical experience.</p>
+                `
+            },
+            "12": {
+                title: 'Week 12 — Food Fiesta Week',
+                body: `
+                    <h4>Session Overview</h4>
+                    <p>Our Team Cheems cooked up a special food festival to showcase and celebrate our teamwork, communication and leadership skills.</p>
+                    <h4>Key Topics Covered</h4>
+                    <ul>
+                        <li>Team Communication – Assigning roles and responsibilities for prep and service.</li>
+                        <li>Leadership Skills – Planning and execution responsibilities.</li>
+                        <li>Event Organization – From planning to execution.</li>
+                        <li>Cooking Presentation – Showcasing hero dishes like kothu, samosa, sarbath, and donuts.</li>
+                    </ul>
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Teamwork – Success depends on good collaboration.</li>
+                        <li>Responsibility – Own tasks and execute them well.</li>
+                        <li>Creativity – Apply creativity in presentation and service.</li>
+                        <li>Communication – Efficient communication throughout planning and execution.</li>
+                    </ul>
+                    <h4>What Was Learned</h4>
+                    <p>Learned how to divide work, communicate under pressure, adapt to setbacks, and deliver excellent presentation and customer service.</p>
+                `
+            }
+        };
+
+        // Create modal element and append to body
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.innerHTML = `
+            <div class="modal" role="dialog" aria-modal="true">
+                <button class="close-btn" aria-label="Close">✕</button>
+                <h3 class="modal-title"></h3>
+                <div class="modal-body"></div>
+                <div class="modal-actions">
+                    <button class="btn close-action">Close</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modalOverlay);
+
+        const modalTitle = modalOverlay.querySelector('.modal-title');
+        const modalBody = modalOverlay.querySelector('.modal-body');
+        const closeBtns = modalOverlay.querySelectorAll('.close-btn, .close-action');
+
+        function openModal(week) {
+            const data = weekDetails[week];
+            if (!data) return;
+            modalTitle.textContent = data.title;
+            // allow HTML content (sections + lists)
+            modalBody.innerHTML = data.body;
+            modalOverlay.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+        }
+
+        // close handlers
+        closeBtns.forEach(b => b.addEventListener('click', closeModal));
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        // wire up details buttons
+        document.querySelectorAll('.details-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const week = this.getAttribute('data-week');
+                openModal(week);
+            });
+        });
+
+        // Initialize simple carousel for timeline images that contain multiple <img> children.
+        (function initTimelineCarousels() {
+            const carousels = document.querySelectorAll('.timeline-image');
+            carousels.forEach(container => {
+                const imgs = Array.from(container.querySelectorAll('img'));
+                if (imgs.length <= 1) {
+                    // ensure container has consistent sizing class
+                    container.classList.remove('carousel');
+                    return;
+                }
+
+                container.classList.add('carousel');
+
+                // create track and move images into slides
+                const track = document.createElement('div');
+                track.className = 'carousel-track';
+
+                imgs.forEach(img => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    // ensure image fills slide
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    slide.appendChild(img);
+                    track.appendChild(slide);
+                });
+
+                // clear container and append track
+                container.innerHTML = '';
+                container.appendChild(track);
+
+                // dots
+                const dots = document.createElement('div');
+                dots.className = 'carousel-dots';
+                const dotEls = [];
+                imgs.forEach((_, i) => {
+                    const d = document.createElement('button');
+                    d.className = 'carousel-dot';
+                    d.type = 'button';
+                    d.setAttribute('aria-label', 'Go to image ' + (i + 1));
+                    dots.appendChild(d);
+                    dotEls.push(d);
+                });
+                container.appendChild(dots);
+
+                let index = 0;
+                const setIndex = (i) => {
+                    index = (i + imgs.length) % imgs.length;
+                    track.style.transform = `translateX(${-index * 100}%)`;
+                    dotEls.forEach((d, idx) => d.classList.toggle('active', idx === index));
+                };
+
+                // dot click
+                dotEls.forEach((d, i) => d.addEventListener('click', () => setIndex(i)));
+
+                // touch support for swipe
+                let startX = 0;
+                let isDown = false;
+                track.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isDown = true;
+                }, {passive: true});
+                track.addEventListener('touchmove', (e) => {
+                    if (!isDown) return;
+                }, {passive: true});
+                track.addEventListener('touchend', (e) => {
+                    if (!isDown) return;
+                    const dx = e.changedTouches[0].clientX - startX;
+                    if (Math.abs(dx) > 40) {
+                        if (dx < 0) setIndex(index + 1); else setIndex(index - 1);
+                    }
+                    isDown = false;
+                });
+
+                // set initial
+                setIndex(0);
+            });
+        })();
+
+        // Performance: enable lazy-loading and async decoding for all images not already marked
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('img').forEach(function(img) {
+                if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+                if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+            });
+        });
     </script>
 </body>
 </html>
