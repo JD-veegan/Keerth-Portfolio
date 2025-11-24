@@ -776,70 +776,75 @@
             animation-delay: 0.6s;
         }
 
-        /* Modal styles for Details popup */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 20px;
-        }
+               /* Modal styles for Details popup */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
 
-        .modal {
-            background: #0f0f1a;
-            color: var(--light);
-            width: 100%;
-            max-width: 720px;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            padding: 22px;
-            position: relative;
-            border: 1px solid rgba(108,99,255,0.12);
-        }
+.modal {
+    background: #0f0f1a;
+    color: var(--light);
+    width: 100%;
+    max-width: 720px;
+    max-height: 80vh;            /* Limit modal height */
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    padding: 22px;
+    position: relative;
+    border: 1px solid rgba(108,99,255,0.12);
+    display: flex;               /* Flex for modal body scroll */
+    flex-direction: column;
+}
 
-        .modal h3 {
-            margin-bottom: 8px;
-        }
+.modal h3 {
+    margin-bottom: 8px;
+}
 
-        .modal .modal-body {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 18px;
-        }
+.modal .modal-body {
+    color: var(--gray);
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    overflow-y: auto;            /* Enable scroll if content too long */
+    flex: 1;                     /* Take remaining vertical space */
+}
 
-        .modal .modal-body h4 {
-            margin: 10px 0 6px;
-            color: var(--light);
-            font-size: 1rem;
-        }
+.modal .modal-body h4 {
+    margin: 10px 0 6px;
+    color: var(--light);
+    font-size: 1rem;
+}
 
-        .modal .modal-body ul {
-            margin: 6px 0 12px 18px;
-            color: var(--gray);
-        }
+.modal .modal-body ul {
+    margin: 6px 0 12px 18px;
+    color: var(--gray);
+}
 
-        .modal .modal-body li {
-            margin-bottom: 6px;
-        }
+.modal .modal-body li {
+    margin-bottom: 6px;
+}
 
-        .modal .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
+.modal .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
 
-        .modal .close-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: transparent;
-            border: none;
-            color: var(--gray);
-            font-size: 1.1rem;
-            cursor: pointer;
+.modal .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: var(--gray);
+    font-size: 1.1rem;
+    cursor: pointer;
         }
     </style>
 </head>
